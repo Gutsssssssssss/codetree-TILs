@@ -1,9 +1,13 @@
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -14,7 +18,7 @@ public class Main {
 	
 	static Map<Integer, Integer> opp = new HashMap<Integer, Integer>();
 	static int N, M, H, K, ret;
-	static Set<int[]> runners;
+	static List<int[]> runners;
 	static Set<String> trees;
 	static int ty, tx, td;
 	static int[] dy = {-1, 0, 1, 0};
@@ -30,7 +34,7 @@ public class Main {
 		H = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		
-		runners = new HashSet<int[]>();
+		runners = new LinkedList<int[]>();
 		trees = new HashSet<String>();
 		
 		for (int i = 0; i < M; i++) {
@@ -117,19 +121,15 @@ public class Main {
 			}
 			
 			// [3] 잡기
-			for (int[] bound : new HashSet<int[]>(Arrays.asList(
-					new int[] {ty, tx}, new int[] {ty + dy[td], tx + dx[td]},
-					new int[] {ty + 2 * dy[td], tx + 2 * dx[td]}))) {
-				int by = bound[0];
-				int bx = bound[1];
-				if (trees.contains(by+","+bx)) continue;
-				
-				for (int[] runner : runners) {
-					int ry = runner[0];
-					int rx = runner[1];
-					if (ry == by && rx == bx) {
-						ret += turn;
-					}
+			Set<String> bset = new HashSet<String>(Arrays.asList(
+					ty+","+tx, (ty + dy[td])+","+(tx + dx[td]),
+					(ty + 2 * dy[td])+","+(tx + 2 * dx[td])));
+			for (int i = runners.size()-1; i>=0 ; i--) {
+				int[] runner = runners.get(i);
+				String pos = runner[0] + "," + runner[1];
+				if (bset.contains(pos) && !trees.contains(pos)) {
+					ret += turn;
+					runners.remove(i);
 				}
 			}
 		}
