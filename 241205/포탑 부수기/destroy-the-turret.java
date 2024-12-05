@@ -124,7 +124,7 @@ public class Main {
 		int damage = arr[sy][sx];
 		
 		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
+			for (int j = 0; j < M; j++) {
 				Arrays.fill(visited[i][j], -1);
 			}
 		}
@@ -141,13 +141,15 @@ public class Main {
 			if (cy == ey && cx == ex) {
 				arr[cy][cx] = Math.max(0, arr[cy][cx] - damage);
 				while (true) {
-					cy = visited[cy][cx][0];
-					cx = visited[cy][cx][1];
-					if (cy == sy && cx == sx) {
+					int py = visited[cy][cx][0];
+					int px = visited[cy][cx][1];
+					if (py == sy && px == sx) {
 						return true;
 					}
-					arr[cy][cx] = Math.max(0, arr[cy][cx] - damage/2);
-					fset.add(cy+","+cx);
+					arr[py][px] = Math.max(0, arr[py][px] - damage/2);
+					fset.add(py+","+px);
+					cy = py;
+					cx = px;
 				}
 			}
 			
