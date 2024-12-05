@@ -52,9 +52,6 @@ public class Main {
 				}
 			}
 			
-			// 공격력 상승
-			arr[sy][sx] += (M + N);
-			turn[sy][sx] = T;
 			
 			// [2] 공격 당할 포탑 선정
 			int mx = 0; int mnTurn = T; int ey = N; int ex = M;
@@ -71,6 +68,9 @@ public class Main {
 					}
 				}
 			}
+			
+			arr[sy][sx] += (M + N);
+			turn[sy][sx] = T;
 			
 			// [2-2] 레이저 공격 (우하좌상 순서로 최단거리 이동-BFS)
 			HashSet<String> fset = new HashSet<String>();
@@ -110,7 +110,8 @@ public class Main {
 		for (int i = 0; i < 8; i++) {
 			int ny = (ey + ddy[i] + N) % N;
 			int nx = (ex + ddx[i] + M) % M;
-			if (arr[ny][nx] >= 1 && !(sy==ny && sx == nx)) {
+			if (sy == ny && sx == nx) continue;
+			if (arr[ny][nx] >= 1) {
 				fset.add(ny+","+nx);
 				arr[ny][nx] = Math.max(0, arr[ny][nx] - damage / 2);
 			}
