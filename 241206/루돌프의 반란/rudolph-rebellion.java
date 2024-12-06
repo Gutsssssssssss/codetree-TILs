@@ -99,7 +99,6 @@ public class Main {
 				if (dead[i]) continue;
 				int[] santa = santas.get(i);
 				if (santa[2] > turn) continue;
-				if (turn == 5 && i == 1) System.out.println("?");
 				int si = santa[0];
 				int sj = santa[1];
 				
