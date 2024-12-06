@@ -137,7 +137,6 @@ public class Main {
 			}
 			for (int i = 1; i <= P; i++) {
 				if (dead[i]) continue;
-				System.out.println(turn + " | " + points[1]);
 				points[i] += 1;
 			}
 			
